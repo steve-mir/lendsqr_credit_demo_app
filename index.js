@@ -1,0 +1,29 @@
+const bodyParser = require("body-parser");
+const express = require("express");
+const cors = require("cors");
+const errors = require("http-errors");
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
+
+const userRoutes = require("./src/api/v1/routes/users");
+
+const PORT = 3000;
+const app = express();
+
+app.use(logger("dev"));
+app.use(express.json());
+app.use(cors());
+app.use(cookieParser());
+app.use(bodyParser.json());
+
+app.use("/", userRoutes);
+
+app.get("/home", async (req, res) => {
+  return res.status(200).send(`Welcome home. Running on port ${PORT}`);
+});
+
+// Remove or comment this function while running locally
+app.listen(PORT, ()=> {
+  console.log(`App is running on port ${PORT}`);
+});
+
