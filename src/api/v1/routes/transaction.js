@@ -1,6 +1,6 @@
 const cors = require("cors");
 const express = require("express");
-const { createNewWallet, getUserWallets } = require("../controllers/wallet");
+const { getUserTransactions } = require("../controllers/transaction");
 const { validateToken } = require("../middleware/jwt");
 
 
@@ -9,7 +9,6 @@ app.use(cors( {origin: true} ));
 
 const router = express.Router();
 
-router.post("/wallets/create", validateToken, createNewWallet);
-router.get("/wallets", validateToken, getUserWallets);
+router.get("/transactions", validateToken, getUserTransactions);
 
 module.exports = router;

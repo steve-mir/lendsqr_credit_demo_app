@@ -11,6 +11,7 @@ class Wallet {
     this.currency = currency;
     this.owner = userId;
     this.balance = 0;
+    this.loanBalance = 0;
     this.created_at = new Date().toISOString();
   }
   
@@ -25,18 +26,31 @@ class Wallet {
   }
 
   update(id) {
-    return db('users')
+    return db('wallets')
       .where('id', Number(id))
       .update(this);
   }
 
   remove(id) {
-    return db('users')
+    return db('wallets')
       .where('id', Number(id))
       .del();
   }
   
 }
 
+function walletDeposit(wallet_id, amount){
+  return db('wallets')
+    .where('id', wallet_id)
+    .increment('balance', Number(amount))
+    .catch(function(e){ console.log(e)});
 
-module.exports = {Wallet};
+}
+
+function getAllWallets(uid) {
+    return db('wallets')
+      .where({ owner: uid })
+  }
+
+
+module.exports = {Wallet, getAllWallets, walletDeposit};

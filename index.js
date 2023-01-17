@@ -9,7 +9,9 @@ const dotenv = require('dotenv');
 
 const userRoutes = require("./src/api/v1/routes/users");
 const walletRoutes = require("./src/api/v1/routes/wallet");
-// TODO: reade https://blog.shahednasser.com/knex-js-tutorial-for-beginners/
+const depositRoutes = require("./src/api/v1/routes/deposit");
+const transactionsRoutes = require("./src/api/v1/routes/transaction");
+
 dotenv.config()
 const PORT = 2000;
 const app = express();
@@ -23,6 +25,8 @@ app.use(bodyParser.json());
 
 app.use("/", userRoutes);
 app.use("/", walletRoutes);
+app.use("/", depositRoutes);
+app.use("/", transactionsRoutes);
 
 app.get("/home", async (req, res) => {
   return res.status(200).send(`Welcome home. Running on port ${PORT}`);
