@@ -5,15 +5,14 @@ const errors = require("http-errors");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const dotenv = require('dotenv');
-const knexConfig = require("./config/db/knexfile");
+// const knexConfig = require("./config/db/knexfile");
 
 const userRoutes = require("./src/api/v1/routes/users");
-
+// TODO: reade https://blog.shahednasser.com/knex-js-tutorial-for-beginners/
 dotenv.config()
 const PORT = 2000;
 const app = express();
 
-const knex = require('knex')(knexConfig[process.env.NODE_ENV]);
 
 app.use(logger("dev"));
 app.use(express.json());

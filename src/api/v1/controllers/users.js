@@ -1,5 +1,5 @@
 const bcrypt = require("bcrypt");
-const {User, createUser} = require("../models/user");
+const {User, findByEmail, findById2} = require("../models/user");
 const { createToken } = require("../middleware/jwt");
 
 
@@ -9,15 +9,29 @@ const { createToken } = require("../middleware/jwt");
  * @param {*} res 
  * @returns 
  */
-const registerUser = (req, res) => {
-    const {email, password} = req.body;
-    bcrypt.hash(password, 10).then((hash) => {
-        let user = new User(email, hash);
-        createUser(user);
-        res.json(`User ${user.email}, ${user.password}, ${password}`);
-    });
+const registerUser = async (req, res) => {
+    const {email, password, name} = req.body;
+    try{
+        bcrypt.hash(password, 10).then(async (hash) => {
+        let user = new User(name, email, hash);
 
-    return res.json({error: "Unknown error occurred"});
+        await user.insert();
+        // Create cookie for user (log user in)
+        const accessToken = createToken(user);
+            res.cookie("access-token", accessToken, {
+                maxAge: 60 * 60 * 24 * 1 * 1000, // cookie lasts 24 hours
+            });
+        res.json({msg:"User created successfully", email: user.email, name: user.name});
+
+        
+        
+    });
+    }catch(e){
+        // res.writeHead(200, {"Content-Type": "application/json"});
+        console.log(`Error is: ${e}`);
+        return res.json({error: "Unknown error occurred " +e});
+    }
+
 };
 
 
@@ -26,17 +40,19 @@ const registerUser = (req, res) => {
  * @param {*} req 
  * @param {*} res 
  */
-const loginUser = (req, res) => {
-    // TODO: remove hPassword with db implemented
-    const {email, password, hPassword} = req.body;
+const loginUser = async (req, res) => {
+    const {email, password} = req.body;
+
+    let user = await findByEmail(email);
     
-    bcrypt.compare(password, hPassword).then((match) => {
+    // Decrypt password and compared 
+    bcrypt.compare(password, user.password).then((match) => {
         if(!match){
-            res.status(500).json({error: "Wrong Username or Password"});
+            res.status(500).json({error: "Wrong email or password"});
         }else{
-            let user = new User(email, hPassword);
+            let user2 = new User(email, user.password);
             // Create access token and store as cookie
-            const accessToken = createToken(user);
+            const accessToken = createToken(user2);
             res.cookie("access-token", accessToken, {
                 maxAge: 60 * 60 * 24 * 1 * 1000, // cookie lasts 24 hours
             });
