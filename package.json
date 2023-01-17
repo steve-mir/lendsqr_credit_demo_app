@@ -6,6 +6,8 @@
   "scripts": {
     "start": "nodemon index.js",
     "dev": "nodemon index.js",
+    "migrate": "knex migrate:latest --knexfile config/db/knexfile.js",
+    "seed": "knex seed:run --knexfile config/db/knexfile.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Eke Chukwuemeka Stephen",
@@ -18,7 +20,10 @@
     "http-errors": "^2.0.0",
     "jsonwebtoken": "^9.0.0",
     "knex": "^2.4.0",
+    "migrate": "^1.8.0",
     "morgan": "^1.10.0",
-    "nodemon": "^2.0.20"
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.20",
+    "sqlite3": "^5.1.4"
   }
 }

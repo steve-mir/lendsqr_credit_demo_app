@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
-const User= require("../models/user");
+const {User, createUser} = require("../models/user");
 const { createToken } = require("../middleware/jwt");
+
 
 /**
  * 
@@ -12,6 +13,7 @@ const registerUser = (req, res) => {
     const {email, password} = req.body;
     bcrypt.hash(password, 10).then((hash) => {
         let user = new User(email, hash);
+        createUser(user);
         res.json(`User ${user.email}, ${user.password}, ${password}`);
     });
 
@@ -51,7 +53,7 @@ const loginUser = (req, res) => {
  * @param {*} res 
  */
 const userProfile = (req, res) => {
-    return res.json({msg: "User profile"});
+    return res.json({msg: `User profile ${process.env.DB_PASS}`});
 };
 
 module.exports = {registerUser, loginUser, userProfile};
