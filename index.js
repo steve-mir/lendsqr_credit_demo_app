@@ -8,6 +8,7 @@ const dotenv = require('dotenv');
 // const knexConfig = require("./config/db/knexfile");
 
 const userRoutes = require("./src/api/v1/routes/users");
+const walletRoutes = require("./src/api/v1/routes/wallet");
 // TODO: reade https://blog.shahednasser.com/knex-js-tutorial-for-beginners/
 dotenv.config()
 const PORT = 2000;
@@ -21,6 +22,7 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 
 app.use("/", userRoutes);
+app.use("/", walletRoutes);
 
 app.get("/home", async (req, res) => {
   return res.status(200).send(`Welcome home. Running on port ${PORT}`);

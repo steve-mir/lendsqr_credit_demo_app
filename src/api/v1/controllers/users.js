@@ -43,16 +43,16 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
     const {email, password} = req.body;
 
-    let user = await findByEmail(email);
+    const user = await findByEmail(email);
     
     // Decrypt password and compared 
     bcrypt.compare(password, user.password).then((match) => {
         if(!match){
             res.status(500).json({error: "Wrong email or password"});
         }else{
-            let user2 = new User(email, user.password);
+
             // Create access token and store as cookie
-            const accessToken = createToken(user2);
+            const accessToken = createToken(user);
             res.cookie("access-token", accessToken, {
                 maxAge: 60 * 60 * 24 * 1 * 1000, // cookie lasts 24 hours
             });
