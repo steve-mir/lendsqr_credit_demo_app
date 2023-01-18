@@ -8,13 +8,14 @@
     "dev": "nodemon index.js",
     "migrate": "knex migrate:latest --knexfile config/db/knexfile.js",
     "seed": "knex seed:run --knexfile config/db/knexfile.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --watchAll"
   },
   "author": "Eke Chukwuemeka Stephen",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.0",
     "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "http-errors": "^2.0.0",
@@ -26,5 +27,9 @@
     "nodemon": "^2.0.20",
     "sqlite3": "^5.1.4",
     "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "jest": "^29.3.1",
+    "supertest": "^6.3.3"
   }
 }
