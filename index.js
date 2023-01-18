@@ -5,7 +5,7 @@ const errors = require("http-errors");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const dotenv = require('dotenv');
-// const knexConfig = require("./config/db/knexfile");
+
 
 const userRoutes = require("./src/api/v1/routes/users");
 const walletRoutes = require("./src/api/v1/routes/wallet");
@@ -14,7 +14,7 @@ const withdrawalRoutes = require("./src/api/v1/routes/withdrawals");
 const transactionsRoutes = require("./src/api/v1/routes/transaction");
 
 dotenv.config()
-const PORT = 2000;
+const PORT = 2001;
 const app = express();
 
 
@@ -34,8 +34,9 @@ app.get("/home", async (req, res) => {
   return res.status(200).send(`Welcome home. Running on port ${PORT}`);
 });
 
-// Remove or comment this function while running locally
 app.listen(PORT, ()=> {
   console.log(`App is running on port ${PORT}`);
 });
+
+module.exports = app;
 
