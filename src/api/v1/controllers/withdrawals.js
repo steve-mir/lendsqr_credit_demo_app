@@ -5,6 +5,7 @@ const { getUser } = require("../models/user");
 const { Wallet, getAllWallets, walletDeposit, getWalletById, walletWithdrawal, getUserWalletForCurrency } = require("../models/wallet");
 const { getWithdrawalHistory, Withdrawal } = require("../models/withdrawals");
 
+const MINIMUM_WITHDRAWAL_AMOUNT = 1000
 
 /**
  * This funds the users wallet.
@@ -13,6 +14,7 @@ const { getWithdrawalHistory, Withdrawal } = require("../models/withdrawals");
  * @param {*} res 
  */
 const externalWithdrawal = async (req, res) => {
+    
     const {amount, currency, desc, bankNo, bankName} = req.body;
     const walletId = req.query.walletId;
     let cookie = req.cookies;
@@ -20,10 +22,12 @@ const externalWithdrawal = async (req, res) => {
     // get wallet balance
     let wallet = await getWalletById(walletId);
     
-    // TODO: set minimum withdrawal amount
     if(wallet.balance < amount){
         console.log("Insufficient wallet balance");
         res.status(500).json({error:"Insufficient wallet balance"});
+    }else if(amount < MINIMUM_WITHDRAWAL_AMOUNT){
+        console.log(`Sorry the minimum withdrawal is ${MINIMUM_WITHDRAWAL_AMOUNT}`);
+        res.status(500).json({error:`Sorry the minimum withdrawal is ${MINIMUM_WITHDRAWAL_AMOUNT}`});
     }else{
 
         // Get User credentials (uid)
@@ -72,11 +76,18 @@ const internalWithdrawal = async (req, res) => {
     let senderWallet = await getWalletById(walletId);
     
 
-    // TODO: set minimum withdrawal amount
-    // TODO: Check if receiving and sending are both of same currency
     if(senderWallet.balance < amount){
         console.log("Insufficient wallet balance");
         res.status(500).json({error:"Insufficient wallet balance"});
+
+    }else if(amount < MINIMUM_WITHDRAWAL_AMOUNT){
+        console.log(`Sorry the minimum withdrawal is ${MINIMUM_WITHDRAWAL_AMOUNT}`);
+        res.status(500).json({error:`Sorry the minimum withdrawal is ${MINIMUM_WITHDRAWAL_AMOUNT}`});
+
+        // If the sending and receiving wallets are of different currencies, do not send
+    }else if(senderWallet.currency != receiverWallet.currency){
+        console.log(`Sorry both wallets must be of the same currency`);
+        res.status(500).json({error:`Sorry both wallets must be of the same currency`});
     }else{
 
         // Get User credentials (uid)

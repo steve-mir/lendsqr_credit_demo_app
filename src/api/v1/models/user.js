@@ -14,6 +14,11 @@ class User {
     this.password = password;
     this.created_at = new Date().toISOString();
   }
+
+  updatedAt(){
+    this.updated_at = new Date().toISOString();
+  }
+
   find() {
     return db('users');
   }
@@ -43,12 +48,6 @@ class User {
 
   }
 
-  update(id) {
-    return db('users')
-      .where('id', Number(id))
-      .update(this);
-  }
-
   remove(id) {
     return db('users')
       .where('id', Number(id))
@@ -56,24 +55,32 @@ class User {
   }
   
 }
+
+function updateUser(user) {
+    return db('users')
+      .where({ uid: user.uid })
+      .update(user)
+      .catch(function(e){ console.log(e)});
+  }
+
 function findByEmail(email) {
     return db('users')
       .where({ email: email})
       .first();
   }
 
-// function getUser(id) {
-//     return db('users')
-//       .where({ email: id })
-//       .orWhere({name: id}) // TODO: change to username
-//       .catch(function(e){ console.log(e)});
-//   }
+function getUserById(id) {
+    return db('users')
+      .where({ uid: id })
+      .first()
+      .catch(function(e){ console.log(e)});
+  }
 
 const getUser = async (id) => {
   return db('users')
       .where({ email: id })
-      .orWhere({name: id}) // TODO: change to username
+      .orWhere({username: id})
       .catch(function(e){ console.log(e)});
 }
 
-module.exports = {User, findByEmail, getUser};
+module.exports = {User, findByEmail, getUser, getUserById, updateUser};
