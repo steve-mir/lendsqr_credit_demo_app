@@ -39,10 +39,30 @@ class Wallet {
   
 }
 
+/**
+ * Deposit funds into wallet
+ * @param {*} wallet_id 
+ * @param {*} amount 
+ * @returns 
+ */
 function walletDeposit(wallet_id, amount){
   return db('wallets')
     .where('id', wallet_id)
     .increment('balance', Number(amount))
+    .catch(function(e){ console.log(e)});
+
+}
+
+/**
+ * Wihdraw funds from wallet
+ * @param {*} wallet_id 
+ * @param {*} amount 
+ * @returns 
+ */
+function walletWithdrawal(wallet_id, amount){
+  return db('wallets')
+    .where('id', wallet_id)
+    .decrement('balance', Number(amount))
     .catch(function(e){ console.log(e)});
 
 }
@@ -52,5 +72,11 @@ function getAllWallets(uid) {
       .where({ owner: uid })
   }
 
+function getWalletById(id) {
+    return db('wallets')
+      .where({ id: id })
+      .first();
+  }
 
-module.exports = {Wallet, getAllWallets, walletDeposit};
+
+module.exports = {Wallet, getWalletById, getAllWallets, walletDeposit, walletWithdrawal};

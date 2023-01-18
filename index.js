@@ -10,6 +10,7 @@ const dotenv = require('dotenv');
 const userRoutes = require("./src/api/v1/routes/users");
 const walletRoutes = require("./src/api/v1/routes/wallet");
 const depositRoutes = require("./src/api/v1/routes/deposit");
+const withdrawalRoutes = require("./src/api/v1/routes/withdrawals");
 const transactionsRoutes = require("./src/api/v1/routes/transaction");
 
 dotenv.config()
@@ -26,6 +27,7 @@ app.use(bodyParser.json());
 app.use("/", userRoutes);
 app.use("/", walletRoutes);
 app.use("/", depositRoutes);
+app.use("/", withdrawalRoutes);
 app.use("/", transactionsRoutes);
 
 app.get("/home", async (req, res) => {
