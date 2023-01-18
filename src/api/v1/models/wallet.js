@@ -78,5 +78,12 @@ function getWalletById(id) {
       .first();
   }
 
+function getUserWalletForCurrency(uid, currency) {
+    return db('wallets')
+      .where({ owner: uid })
+      .andWhere({currency: currency})
+      .catch(function(e){ console.log(e)});
+  }
 
-module.exports = {Wallet, getWalletById, getAllWallets, walletDeposit, walletWithdrawal};
+
+module.exports = {Wallet, getUserWalletForCurrency, getWalletById, getAllWallets, walletDeposit, walletWithdrawal};

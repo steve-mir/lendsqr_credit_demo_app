@@ -62,4 +62,18 @@ function findByEmail(email) {
       .first();
   }
 
-module.exports = {User, findByEmail};
+// function getUser(id) {
+//     return db('users')
+//       .where({ email: id })
+//       .orWhere({name: id}) // TODO: change to username
+//       .catch(function(e){ console.log(e)});
+//   }
+
+const getUser = async (id) => {
+  return db('users')
+      .where({ email: id })
+      .orWhere({name: id}) // TODO: change to username
+      .catch(function(e){ console.log(e)});
+}
+
+module.exports = {User, findByEmail, getUser};
