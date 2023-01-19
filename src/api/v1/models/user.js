@@ -19,10 +19,6 @@ class User {
     this.updated_at = new Date().toISOString();
   }
 
-  find() {
-    return db('users');
-  }
-
   findByUsername(username) {
     return db('users')
       .where({ username: username })
@@ -55,7 +51,11 @@ class User {
   }
   
 }
-
+function getAllUsers() {
+  return db('users')
+  .catch(function(e){ console.log(e)});
+}
+  
 function updateUser(user) {
     return db('users')
       .where({ uid: user.uid })
@@ -83,4 +83,4 @@ const getUser = async (id) => {
       .catch(function(e){ console.log(e)});
 }
 
-module.exports = {User, findByEmail, getUser, getUserById, updateUser};
+module.exports = {User, getAllUsers, findByEmail, getUser, getUserById, updateUser};

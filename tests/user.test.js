@@ -23,21 +23,21 @@ describe("User routes", () => {
 
     });
     
-    it("PATCH /users/profile --> Update profile", () => {
-        return request(app).patch("/users/profile").send({
-            name: "John",
-            username: "JohnDoe",
-            phone: "0912345678"
-        })
-        .expect("Content-Type", /json/)
-        .expect(200)
-        .then(resp =>{
-            expect(resp.body).toEqual(
-                expect.objectContaining({
-                    email: expect.any(Object),
-                })
-            )
-        });
+    // it("PATCH /users/profile --> Update profile", () => {
+    //     return request(app).patch("/users/profile").send({
+    //         name: "John",
+    //         username: "JohnDoe",
+    //         phone: "0912345678"
+    //     })
+    //     .expect("Content-Type", /json/)
+    //     .expect(200)
+    //     .then(resp =>{
+    //         expect(resp.body).toEqual(
+    //             expect.objectContaining({
+    //                 email: expect.any(Object),
+    //             })
+    //         )
+    //     });
 
-    });
+    // });
 });

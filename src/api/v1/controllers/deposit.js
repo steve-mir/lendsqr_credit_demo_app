@@ -36,7 +36,7 @@ const fundWallet = async (req, res) => {
         await transaction.createTransaction();
 
         // await wallet.createWallet();
-        res.json({msg:"Wallet created successfully"});
+        res.json({msg:"Deposit successfully"});
     }
 
 };

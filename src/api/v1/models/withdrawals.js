@@ -31,7 +31,7 @@ class Withdrawal {
 
 function getWithdrawalHistory(uid) {
     return db('withdrawals')
-      .where({ userId: uid })
+      .where({ sender_id: uid })
   }
 
 

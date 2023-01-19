@@ -1,5 +1,5 @@
 const bcrypt = require("bcrypt");
-const {User, findByEmail, getUserById, updateUser} = require("../models/user");
+const {User, findByEmail, getUserById, updateUser, getUser} = require("../models/user");
 const { createToken } = require("../middleware/jwt");
 const { verify } = require("jsonwebtoken");
 
@@ -16,7 +16,11 @@ const registerUser = async (req, res) => {
         bcrypt.hash(password, 10).then(async (hash) => {
         let user = new User(name, email, hash);
 
-        await user.insert();
+        try{
+            await user.insert();
+        }catch(e){
+            res.status(500).json({msg:e,});
+        }
         // Create cookie for user (log user in)
         const accessToken = createToken(user);
             res.cookie("access-token", accessToken, {
@@ -60,6 +64,23 @@ const loginUser = async (req, res) => {
             return res.status(200).json({msg: "User logged in"});
         }
     })
+
+    
+};
+
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
+const getUsers = async (req, res) => {
+
+    try{
+        let users = await getUser();
+        res.status(200).json({users});
+    }catch(error){
+        res.status(500).json({error: error.message});
+    }
 
     
 };
@@ -124,4 +145,4 @@ const userProfile = (req, res) => {
     return res.json({msg: `User profile ${process.env.DB_PASS}`});
 };
 
-module.exports = {registerUser, loginUser, userProfile, getCurrentUser, updateUserProfile};
+module.exports = {registerUser, loginUser, userProfile, getUsers, getCurrentUser, updateUserProfile};
