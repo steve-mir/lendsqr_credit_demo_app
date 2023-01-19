@@ -1,10 +1,10 @@
 # LendsQR API
 Welcome to the LendsQR API, the live API is hosted in [cyclic](https://odd-ruby-foal-tux.cyclic.app/).
 
-The API home is /home, which when visited you get the messgae below
+The API home is /, which when visited you get the messgae below
 ```json
 {
-    "Welcome home. Running on port $port"
+    "Welcome to lendsqr API see docs on how to use"
 }
 ```
 
