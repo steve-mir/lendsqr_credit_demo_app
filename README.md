@@ -80,7 +80,7 @@ The base URL for the live version is
 
 ```json
 {
-    "msg": "message": "Logged out successfully"
+    "msg": "Logged out successfully"
 }
 ```
 

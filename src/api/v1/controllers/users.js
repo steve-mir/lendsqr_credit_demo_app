@@ -141,8 +141,19 @@ const updateUserProfile = async (req, res) => {
  * @param {*} req 
  * @param {*} res 
  */
+const logout = (req, res) => {
+    req.authenticated = false;
+    res.clearCookie("access-token");
+    return res.json({msg: `Logged out successfully`});
+};
+
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
 const userProfile = (req, res) => {
     return res.json({msg: `User profile ${process.env.DB_PASS}`});
 };
 
-module.exports = {registerUser, loginUser, userProfile, getUsers, getCurrentUser, updateUserProfile};
+module.exports = {registerUser, loginUser,logout, userProfile, getUsers, getCurrentUser, updateUserProfile};

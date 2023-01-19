@@ -1,6 +1,6 @@
 const cors = require("cors");
 const express = require("express");
-const { registerUser, loginUser, userProfile, getCurrentUser, updateUserProfile, getUsers } = require("../controllers/users");
+const { registerUser, loginUser, userProfile, getCurrentUser, updateUserProfile, getUsers, logout } = require("../controllers/users");
 const { validateToken } = require("../middleware/jwt");
 const validateEmailAndPassword = require("../middleware/validateEmailPassword");
 
@@ -16,5 +16,6 @@ router.post("/users/login", validateEmailAndPassword, loginUser);
 router.get("/users", validateToken, getUsers);
 router.get("/users/profile", validateToken, getCurrentUser);
 router.patch("/users/profile", validateToken, updateUserProfile);
+router.get("/user/logout", logout);
 
 module.exports = router;
