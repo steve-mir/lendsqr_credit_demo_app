@@ -32,6 +32,10 @@ app.use("/", withdrawalRoutes);
 app.use("/", transactionsRoutes);
 app.use("/", investmentRoutes);
 
+app.get("/", async (req, res) => {
+  return res.status(200).send(`Welcome to lendsqr API see docs on how to use`);
+});
+
 app.get("/home", async (req, res) => {
   return res.status(200).send(`Welcome home. Running on port ${PORT}`);
 });
