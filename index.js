@@ -12,6 +12,7 @@ const walletRoutes = require("./src/api/v1/routes/wallet");
 const depositRoutes = require("./src/api/v1/routes/deposit");
 const withdrawalRoutes = require("./src/api/v1/routes/withdrawals");
 const transactionsRoutes = require("./src/api/v1/routes/transaction");
+const investmentRoutes = require("./src/api/v1/routes/investment");
 
 dotenv.config()
 const PORT = 2001;
@@ -29,6 +30,7 @@ app.use("/", walletRoutes);
 app.use("/", depositRoutes);
 app.use("/", withdrawalRoutes);
 app.use("/", transactionsRoutes);
+app.use("/", investmentRoutes);
 
 app.get("/home", async (req, res) => {
   return res.status(200).send(`Welcome home. Running on port ${PORT}`);
