@@ -13,6 +13,7 @@ const depositRoutes = require("./src/api/v1/routes/deposit");
 const withdrawalRoutes = require("./src/api/v1/routes/withdrawals");
 const transactionsRoutes = require("./src/api/v1/routes/transaction");
 const investmentRoutes = require("./src/api/v1/routes/investment");
+const stockRoutes = require("./src/api/v1/routes/stocks");
 
 dotenv.config()
 const PORT = 2001;
@@ -31,6 +32,7 @@ app.use("/", depositRoutes);
 app.use("/", withdrawalRoutes);
 app.use("/", transactionsRoutes);
 app.use("/", investmentRoutes);
+app.use("/", stockRoutes);
 
 app.get("/", async (req, res) => {
   return res.status(200).send(`Welcome to lendsqr API see docs on how to use`);
