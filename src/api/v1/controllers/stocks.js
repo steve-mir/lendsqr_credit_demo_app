@@ -1,4 +1,6 @@
 const { request } = require("express");
+const fetch = require('node-fetch');
+
 
 /**
  * 
@@ -13,17 +15,38 @@ const getStocks = async (req, res) => {
         }
     };
 
-    request(options, (error, response, body) => {
-        if (error) {
-          console.error(error);
-          res.status(500).send('An error occurred');
-        } else {
-          // Return the response to the client
-          res.writeHead(200, {"Content-Type": "application/json"});
-          res.status(200).send(body);
-          res.send(body);
-        }
-    });
+    // fetch("https://query1.finance.yahoo.com/v7/finance/quote?symbols=BRPHF")
+    // .then(response => response.json())
+    // .then(json => {
+    //   res.send(json);
+    // })
+    // .catch(err => console.error(err));
+
+    fetch(`https://finnhub.io/api/v1/stock/symbol?exchange=US&token=cf7qk6iad3iad4t66pk0cf7qk6iad3iad4t66pkg`)
+  .then(response => response.json())
+  .then(data => {
+    console.log(data);
+    res.send(data);
+  })
+  .catch(error => {
+    console.error(error);
+  });
+
 };
 
-module.exports = {getStocks};
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
+const getGLXStock = async (req, res) => {
+  fetch("https://query1.finance.yahoo.com/v7/finance/quote?symbols=BRPHF")
+  .then(response => response.json())
+  .then(json => {
+    res.send(json);
+  })
+  .catch(err => console.error(err));
+
+};
+
+module.exports = {getStocks, getGLXStock};
