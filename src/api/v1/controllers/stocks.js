@@ -49,4 +49,23 @@ const getGLXStock = async (req, res) => {
 
 };
 
-module.exports = {getStocks, getGLXStock};
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
+const getStockPrices = async (req, res) => {
+  // const {symbols} = req.query.id
+  const {symbols} = req.body;
+  console.log("testing ");
+  console.log(symbols);
+  fetch(`https://query1.finance.yahoo.com/v7/finance/quote?symbols=${symbols}`)
+  .then(response => response.json())
+  .then(json => {
+    res.send(json);
+  })
+  .catch(err => console.error(err));
+
+};
+
+module.exports = {getStocks, getGLXStock, getStockPrices};

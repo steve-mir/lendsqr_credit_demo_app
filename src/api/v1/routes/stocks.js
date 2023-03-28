@@ -1,6 +1,6 @@
 const cors = require("cors");
 const express = require("express");
-const { getStocks, getGLXStock } = require("../controllers/stocks");
+const { getStocks, getGLXStock, getStockPrices } = require("../controllers/stocks");
 
 
 
@@ -11,5 +11,7 @@ const router = express.Router();
 
 router.get("/stocks", getStocks);
 router.get("/stocks/glx", getGLXStock);
+router.get("/stocks/symbols", getStockPrices);
+
 
 module.exports = router;
