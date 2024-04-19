@@ -1,4 +1,5 @@
 const http = require('http');
+const https = require('https');
 const fs = require('fs');
 const path = require('path');
 
@@ -10,8 +11,10 @@ const path = require('path');
  */
 const downloadZippedFile = async (req, res) => {
     try {
+        // ! https://odd-ruby-foal-tux.cyclic.app/download/bithumb
+
         // if (req.url === '/download') {
-            const filePath = path.join(__dirname, '../../../../docs/Bithumb.zip'); // Update the path to your zip file
+            // const filePath = path.join(__dirname, '../../../../docs/Bithumb.zip');
     
             // fs.readFile(filePath, (err, data) => {
             //     if (err) {
@@ -23,15 +26,36 @@ const downloadZippedFile = async (req, res) => {
             //         res.end(data);
             //     }
             // });
-            fs.readFile(filePath, (err, data) => {
-                if (err) {
-                    res.writeHead(404, {'Content-Type': 'text/plain'});
-                    res.end('Error: File not found');
-                } else {
-                    res.setHeader('Content-disposition', 'attachment; filename=Bithumb.zip');
-                    res.setHeader('Content-Type', 'application/octet-stream'); // Set the correct Content-Type for zip files
-                    res.end(data);
-                }
+
+            // !
+            // fs.readFile(filePath, (err, data) => {
+            //     if (err) {
+            //         res.writeHead(404, {'Content-Type': 'text/plain'});
+            //         res.end('Error: File not found');
+            //     } else {
+            //         res.setHeader('Content-disposition', 'attachment; filename=Bithumb.zip');
+            //         res.setHeader('Content-Type', 'application/octet-stream'); // Set the correct Content-Type for zip files
+            //         res.end(data);
+            //     }
+            // });
+
+            const fileUrl = "https://lavont-wallet-c3e4c.web.app/docs/Bithumb.zip";
+
+            https.get(fileUrl, (fileRes) => {
+                res.setHeader('Content-disposition', 'attachment; filename=Bithumb.zip');
+                res.setHeader('Content-Type', 'application/octet-stream');
+    
+                fileRes.on('data', (data) => {
+                    res.write(data);
+                });
+    
+                fileRes.on('end', () => {
+                    res.end();
+                });
+            }).on('error', (err) => {
+                console.error('Error downloading file:', err);
+                res.writeHead(404, {'Content-Type': 'text/plain'});
+                res.end('Error: File not found');
             });
 
         // } else {
