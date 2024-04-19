@@ -45,8 +45,6 @@ const generatePaymentLink = async (req, res) => {
     }
 };
 
-module.exports = { generatePaymentLink };
-
 
 const generatePaymentLink2 = async (req, res) => {
     try {
@@ -118,8 +116,6 @@ const generatePaymentLink2 = async (req, res) => {
     //   }
 
 };
-
-
 
 
 module.exports = {generatePaymentLink};
