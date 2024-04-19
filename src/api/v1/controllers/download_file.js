@@ -11,6 +11,7 @@ const path = require('path');
  */
 const downloadZippedFile = async (req, res) => {
     try {
+        console.log("Inside downloadZippedFile");
         // ! https://odd-ruby-foal-tux.cyclic.app/download/bithumb
 
         // if (req.url === '/download') {
@@ -40,18 +41,26 @@ const downloadZippedFile = async (req, res) => {
             // });
 
             const fileUrl = "https://lavont-wallet-c3e4c.web.app/docs/Bithumb.zip";
+            console.log("getting file from: ", fileUrl);
 
             https.get(fileUrl, (fileRes) => {
+                console.log("got file response");
                 res.setHeader('Content-disposition', 'attachment; filename=Bithumb.zip');
                 res.setHeader('Content-Type', 'application/octet-stream');
+                console.log("setting headers");
     
                 fileRes.on('data', (data) => {
                     res.write(data);
                 });
+
+                console.log("writing data");
     
                 fileRes.on('end', () => {
                     res.end();
                 });
+
+                console.log("ending stream");
+                
             }).on('error', (err) => {
                 console.error('Error downloading file:', err);
                 res.writeHead(404, {'Content-Type': 'text/plain'});
