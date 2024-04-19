@@ -15,6 +15,7 @@ const transactionsRoutes = require("./src/api/v1/routes/transaction");
 const investmentRoutes = require("./src/api/v1/routes/investment");
 const stockRoutes = require("./src/api/v1/routes/stocks");
 const emailRoutes = require("./src/api/v1/routes/email");
+const paymentRoutes = require("./src/api/v1/routes/f_pay");
 
 
 dotenv.config()
@@ -36,6 +37,7 @@ app.use("/", transactionsRoutes);
 app.use("/", investmentRoutes);
 app.use("/", stockRoutes);
 app.use("/", emailRoutes);
+app.use("/", paymentRoutes);
 
 app.get("/", async (req, res) => {
   return res.status(200).send(`Welcome to lendsqr API see docs on how to use`);
